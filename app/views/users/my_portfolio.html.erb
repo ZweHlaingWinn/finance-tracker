@@ -17,3 +17,6 @@
 <div id="result">
     
 </div>
+<% unless @trakcer_stocks.empty?%>
+    <%= render  "stocks/list" %>
+<%end%>
