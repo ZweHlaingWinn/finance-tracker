@@ -6,5 +6,22 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def stock_alread_tracked?(ticker_symbol)
+      stock = Stock.check_db(ticker_symbol)
+      return false unless stock
+      stocks.where(id: stock.id).exists?
+  end
+
+  def under_track_stock?
+    stocks.count < 10
+
+  end
+  
+
+
+def can_track_stock?(ticker_symbol)
+    under_track_stock? && !stock_alread_tracked?(ticker_symbol)
+end
          
 end
